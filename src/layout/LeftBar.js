@@ -1,27 +1,20 @@
 import React,{useContext} from "react";
 import { StateContext } from "../contexts";
+import { Link } from "react-navi";
 
 
 export default function Header(){
-    const {dispatch} = useContext(StateContext)
-    
 
-    
-    
-    function changeContent(e){
-        
-        dispatch({type: 'CHANGE_COMPONENT', component:e.target.id})
-       
-    }
     
     
 
     return(
-        <div className=" bg-dark" style={{height: "100vh", width: "150px", float: "left"}}>
+        <div className=" bg-dark" style={{height: "100vh"}}>
             <ul className="leftBar">
-                <li><a href="#" onClick={changeContent} id="tutoriais"> Tutoriais </a> </li>
-                <li><a href="#" onClick={changeContent} id="PainelLink"> Links </a> </li>
-                <li><a href="#" onClick={changeContent} id="registros"> Registros </a> </li>
+                <li><Link href={'/'}> <h2>  Home </h2> </Link>  </li>
+                <li><Link href={'/tutoriais'}> Tutoriais</Link> </li>
+                <li> <Link href={'/links'}> Links </Link> </li>
+                <li><a href="#"  id="registros"> Registros </a> </li>
                 
             </ul>
             

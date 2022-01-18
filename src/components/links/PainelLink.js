@@ -1,17 +1,23 @@
 import React from "react";
 
 import CreateLink from "./CreateLink";
-import ShowLinks from "./ShowLinks";
+import ListLinks from "./ListLinks";
+
 
 export default function PainelLink(){
 
     return(
         <div>
-            <CreateLink/>
-                <hr/>
-            <ShowLinks/>
+            
+            <div className="container mt-2">
+                <CreateLink/>
+            
+                <ListLinks />
+            </div>
 
         </div>
+       
+            
     )
 
 

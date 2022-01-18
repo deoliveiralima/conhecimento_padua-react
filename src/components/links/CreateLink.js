@@ -1,124 +1,127 @@
 import React, {useEffect, useState, useContext} from "react";
 import { useInput } from "react-hookedup";
-import axios from "axios";
+import { useCreateLink, useUpdateLink } from "../../api/apiLink";
 
 import { StateContext } from "../../contexts";
-import { useResource } from "react-request-hook";
+
+import LinkDataService from '../services/LinkService'
+import { useLink } from "../../hooks";
+import { useDispatch } from "../../hooks";
+
 
 export default function CreateLink(){
 
-        //definondo os text inputs
-    const {value: nome, setValue: setnome, bindToInput: bindName} = useInput('')
+//definindo os text inputs
+    const {value: nome, setValue: setNome, bindToInput: bindName} = useInput('')
     const {value: url, setValue: setUrl, bindToInput: bindUrl} = useInput('')
-
     
-    const [linkResponse, setLinkResponse] = useState('')
+    //obtendo states e dispatch
+    const link = useLink()
+    const dispatch = useDispatch()
 
-    //obtendo states
-    const {state, dispatch} = useContext(StateContext)
-    const {linkEdit} = state
-    const {links} = state
-    
-   
+    const [id, setId] = useState(0)
+    //definiir texto do botao entrea adicionar e salvar
     const [textButton, setTextButton] = useState('Adicionar')
-    const  [baseUrl, setBaseUrl] = useState()
-    const [method, setMethod] = useState()
-  
-    useEffect(()=> {
-        setnome(linkEdit.nome)
-        setUrl(linkEdit.url)
+    const [option, setOption] = useState(true)
 
-        setTextButton('Atualizar')
-        setBaseUrl (`http://localhost:8000/api/link/${linkEdit.id}}`)
-        setMethod('put')
-        
-    }, [linkEdit])
+    const [responseCreate, createLink] = useCreateLink()
+    const [responseUpdate, updateLink] = useUpdateLink()
+    const [prevData, setPrevData] = useState()
+
     useEffect(()=> {
         setDefaultValues()
     },[])
 
+    // quando for setado um valor para um novo valor para a var link no reducer 
+    //vai disparar este effect e havendo um link preenchido 
+    //ira preencher os inputs
     useEffect(() => {
-        console.log(linkResponse)
-        if(linkResponse){
-            setDefaultValues()
-        }
-    }, [linkResponse])
-
-    const [ link , createLink ] = useResource(({ nome, url }) => ({
-        url: baseUrl,
-        method: method,
-        data: { nome: nome, url: url}
-      }))
-
-      useEffect(()=> {
-       
-        setDefaultValues()
-        if(link.data){
-            dispatch({type: 'UPDATE_LINK_LIST', link:{id: link.data.id, nome:link.data.nome, url: link.data.url}})
+        if(typeof link === 'object' &&  Object.keys(link).length > 0){
+            
+  
+            setNome(link.nome)
+            setUrl(link.url)
+            setId(link.id)
+            setTextButton('Salvar')
+            setOption(false)
         }
         
-      }, [link])
+    }, [link])
+
+    useEffect(()=> {
+        if(responseUpdate.data){
+            dispatch({type: 'UPDATE_LINK_LIST', id: responseUpdate.data.id, link: responseUpdate.data})
+            setOption(true)
+            setDefaultValues()
+        }
+            
+            
+
+    },[responseUpdate])
+
+    useEffect(()=> {
+        if(responseCreate.data && responseCreate.data !== prevData ){
+            dispatch({type: 'ADD_LINK_IN_LIST', link: responseCreate.data})
+            setPrevData(responseCreate.data)
+            setDefaultValues()
+        }
+    },[responseCreate])
 
 
     function handleSubmit(e){
         e.preventDefault()
-        createLink({nome, url})
-
-        // createLink({nome, url})
-
-            // axios({
-            //     method: method,
-            //     url: baseUrl,
-            //     data:{
-            //     nome: nome,
-            //     url: url
-            // }
-            // }).then((response) => {
-            //     setLinkResponse(response.data)
-            //     if(linkResponse)
-            //         setDefaultValues()
-                
-            // })
+        if(option){
+            createLink({ nome, url })
+        }
+        else{
+            updateLink(id, nome, url)
+        }
         
     } 
 
     function setDefaultValues(){
-            setnome('')
-            setUrl('')
-            setTextButton('Adicionar')
-            setMethod ('post')
-            setBaseUrl('http://localhost:8000/api/link/store')
+        setTextButton('Adicionar')
+        setNome('')
+        setUrl('')
+        
     }
 
-   
-    
     return(
-            <form onSubmit={handleSubmit} method="post">
-                
-            <div className="mt-3" style={{}}>
-                <div className="row"> 
-                    <div className="col-1"> 
-                        <label htmlFor="nome" className="form-label mt-1">Nome: </label>
+        
+            
+                <div className="card">
+                    <div className="card-header">
+                        Adicionar Link
                     </div>
-                    <div className="col-4">
+                    <div className="card-body">
+                    <form onSubmit={handleSubmit} method="post">
+                   
+
+                    <div className="row"> 
+                        <div className="col-1"> 
+                            <label htmlFor="nome" className="form-label mt-1">Nome: </label>
+                        </div>
+                        <div className="col-4">
+                            
+                            <input type="text" className="form-control" placeholder="Nome do Link" name="nome" id="nome" value={nome} {...bindName} required/>
+                        </div>
+                        <div className="col-1">
+                            <label htmlFor="url" className="form-label mt-1">URL:</label>
+                        </div>
+                        <div className="col-4">
+                            <input type="text" className="form-control" placeholder="URL" name="url" id="url" value={url} {...bindUrl} required/>
+                        </div>
+                        <div className="col">
+
+                        <button type="submit" id="linkButton" className="btn btn-success">{textButton}</button>
+                        </div>
+                    </div>
+                    </form>
                         
-                        <input type="text" className="form-control" placeholder="Nome do Link" name="nome" id="nome" value={nome} {...bindName}/>
-                    </div>
-                    <div className="col-1">
-                        <label htmlFor="url" className="form-label mt-1">URL:</label>
-                    </div>
-                    <div className="col-4">
-                        <input type="text" className="form-control" placeholder="URL" name="url" id="url" value={url} {...bindUrl}/>
-                    </div>
-                    <div className="col">
-                
-                    <button type="submit" id="linkButton" className="btn btn-primary">{textButton}</button>
                     </div>
                 </div>
-       
-    
-            </div>
-            </form>
+                
+            
     )
 
 }

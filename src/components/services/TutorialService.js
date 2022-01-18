@@ -1,23 +1,23 @@
 import http from '../../http-common'
 
 const getAll = () => {
-  return http.get("/link");
+  return http.get("/tutorial");
 };
 
 const get = id => {
-  return http.get(`/link/${id}`);
+  return http.get(`/tutorial/${id}`);
 };
 
 const create = data => {
-  return http.post("/link", data);
+  return http.post("/tutorial", data);
 };
 
 const update = (id, data) => {
-  return http.put(`/link/${id}`, data);
+  return http.put(`/tutorial/${id}`, data);
 };
 
 const remove = id => {
-  return http.delete(`/link/${id}`);
+  return http.delete(`/tutorial/${id}`);
 };
 
 

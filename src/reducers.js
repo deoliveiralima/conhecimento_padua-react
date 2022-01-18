@@ -1,22 +1,11 @@
-
-
-
-
-function changeComponent(state, action){
-    switch(action.type){
-        case 'CHANGE_COMPONENT':
-            return action.component
-        default:
-            return state
-    }
-
-}
-
 function linkReducer(state, action){
     switch(action.type){
-        case 'EDIT_LINK':
+        case 'SET_LINK':
             const link = action.link
             return link
+        case 'RESET_LINK':
+           
+            return {...state, id: '', nome: '', url: ''}
         default:
             return state
     }
@@ -24,11 +13,40 @@ function linkReducer(state, action){
 
 function linksReducer(state, action){
     switch(action.type){
-        case 'GET_ALL_LINKS':
+        case 'LIST_LINKS':
             return action.links
         case 'UPDATE_LINK_LIST':
-            const newLink = {id: action.link.id, nome: action.link.nome, url: action.link.url}
-            return [...state, newLink]
+            console.log(action.link)
+            const elementsIndex = state.findIndex(element => element.id === action.id )
+            let newArray = [...state]
+            newArray[elementsIndex] = {...newArray[elementsIndex], nome: action.link.nome, url: action.link.url}
+            return  newArray
+        case 'REMOVE_LINK_FROM_LIST':
+            const newLinkList = state.filter((link) => link.id !== action.id)
+            return newLinkList
+        case 'ADD_LINK_IN_LIST':
+           
+            return [...state, action.link]
+        default:
+            return state 
+    }
+
+    
+}
+
+function tutoriaisReducer(state, action){
+    switch(action.type){
+        case 'LIST_TUTORIAIS':
+            return action.tutoriais 
+        default:
+            return state
+    }
+}
+
+function tutorialReducer(state, action){
+    switch(action.type){
+        case 'SET_TUTORIAL':
+            return action.tutorial
         default:
             return state
     }
@@ -39,9 +57,11 @@ function linksReducer(state, action){
 export default function appReducer(state, action){
 
     return{
-        component: changeComponent(state.component, action),
-        linkEdit: linkReducer(state.linkEdit, action),
-        links: linksReducer(state.links, action)
+       
+        link: linkReducer(state.linkEdit, action),
+        links: linksReducer(state.links, action),
+        tutoriais: tutoriaisReducer(state.tutoriais, action),
+        tutorial: tutorialReducer(state.tutorial, action),
     }
 
    
