@@ -71,7 +71,7 @@ export default function CreateLink(){
     function handleSubmit(e){
         e.preventDefault()
         if(option){
-            createLink({ nome, url })
+            createLink( nome, url )
         }
         else{
             updateLink(id, nome, url)
