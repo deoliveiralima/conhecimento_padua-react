@@ -1,3 +1,4 @@
+import React from "react"
 import { Link, useNavigation } from "react-navi"
 
 //icons
@@ -5,18 +6,20 @@ import { BiPencil } from "react-icons/bi"
 import { AiFillDelete } from "react-icons/ai"
 import { GrView } from "react-icons/gr"
 
-
 import { useRemoveTutorial } from "../../api/apiTutorial"
-import { useTutoriais } from "../../hooks"
+import { useEffect } from "react"
 
 
 
-export default function  TutorialList({tutoriais}){
+function  TutorialList({tutoriais, getListaTutoriais}){
 
     const [response, removeTutorial] = useRemoveTutorial()
     const navigation = useNavigation()
-    
-    
+    console.log('tutorial list')
+
+    useEffect(()=>{
+        getListaTutoriais()
+    }, [response])
 
     return(
         <>  
@@ -39,7 +42,7 @@ export default function  TutorialList({tutoriais}){
 
                             <tr key={tutorial.id} id={tutorial.id}>
                                 <th scope="row">{tutorial.id} </th>
-                                <td style={{cursor: "pointer"}} onClick={(e) => navigation.navigate(`/tutorial/edit/${tutorial.id}`)}>
+                                <td style={{cursor: "pointer"}} onClick={(e) => navigation.navigate(`/tutorial/${tutorial.id}`)}>
 
                                     {tutorial.titulo} <GrView/> 
                                 </td>
@@ -49,7 +52,7 @@ export default function  TutorialList({tutoriais}){
                                     onClick={(e) => {e.preventDefault(); navigation.navigate(`/tutorial/edit/${tutorial.id}`); }}/> 
                                 </td>
                                 <td className="col-10"> 
-                                <AiFillDelete style={{cursor: "pointer"}} onClick={(e)=> { e.preventDefault(); removeTutorial(tutorial.id); window.location.href = `/tutoriais`; }} />
+                                <AiFillDelete style={{cursor: "pointer"}} onClick={(e)=> { e.preventDefault(); removeTutorial(tutorial.id);  }} />
                                 
                                 </td>
                             </tr>
@@ -62,23 +65,9 @@ export default function  TutorialList({tutoriais}){
 
             <Link href="/tutorial/create" className="btn btn-success" >Criar novo Tutorial</Link>
             <hr/>
-            <ul className="list-group list-group-flush">
-                {tutoriais && tutoriais.map( (tutorial) => ( 
-                    <li className="list-group-item" key={tutorial.id}> 
-                    
-
-                    
-                    
-                    
-
-                    
-
-                    </li>
-                ))}
-
-               
-                
-            </ul>
+     
         </>
     )
 }
+
+export default React.memo(TutorialList)

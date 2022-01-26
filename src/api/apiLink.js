@@ -33,7 +33,7 @@ export  function useUpdateLink(){
         data: {nome, url}
     }))
 }
-export  function useRemovelink(){
+export  function useRemovelink(){ 
     return useResource((id) => ({
         url: `/link/${id}`,
         method: 'delete',

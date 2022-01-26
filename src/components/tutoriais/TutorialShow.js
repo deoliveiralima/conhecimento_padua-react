@@ -1,12 +1,10 @@
 import { useContext, useEffect } from "react"
-import { Link } from "react-navi"
 import { StateContext } from "../../contexts"
-import TutorialDataService from '../services/TutorialService'
 
-export default function TutorialShow(){
-    const {state, dispatch} = useContext(StateContext)
-    const {tutorial} = state
-    
+
+export default function TutorialShow({tutorial}){
+
+    console.log(tutorial)
 
 
     return(

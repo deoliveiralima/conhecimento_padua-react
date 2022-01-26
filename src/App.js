@@ -1,9 +1,6 @@
-import React,{useState, useReducer, useContext} from "react";
+import React,{useState, useReducer} from "react";
 
 import {StateContext} from './contexts'
-
-import LeftBar from './layout/LeftBar'
-
 
 import appReducer from "./reducers";
 import HomePage from "./pages/HomePage";
@@ -19,25 +16,31 @@ import ListTutorialPage from "./pages/ListTutorialPage";
 import CreateTutorialPage from "./pages/CreateTutorialPage";
 import TutorialPage from "./pages/TutorialPage";
 import EditTutorialPage from "./pages/EditTutorialPage";
-import ListLinkPage from "./pages/links/ListLinkPage";
+
 
 //css
 
 import './components/css/style.css'
+import TitleBar from "./layout/TitleBar";
+import SideBar from "./layout/SideBar";
+import LinkPage from "./pages/links/LinkPage";
  
 
 const routes = mount({
   '/' : route({view: <HomePage/>}),
   '/tutoriais': route ({view: <ListTutorialPage />, title :"Lista de Tutoriais"}),
-  '/links': route ({view: <PainelLink/>}),
-  '/tutorial/create': route({view: <CreateTutorialPage/> }),
+  '/links': route ({view: <PainelLink/>, title: "Painel Link"}),
+  '/tutorial/create': route({view: <CreateTutorialPage/>, title: "Adicionar Novo Link" }),
   '/tutorial/:id': route( req => { 
                           return  { view: <TutorialPage id={req.params.id} /> } } ),
   '/tutorial/edit/:id': route( req => { 
     return  { view: <EditTutorialPage id={req.params.id} /> } }),
-  '/links' : route({view: <ListLinkPage/>}),
+    
+  '/links' : route({view: <LinkPage/>}),
   
 })
+
+
 
 const initialState = {
   link: {},
@@ -59,29 +62,18 @@ function App() {
       <StateContext.Provider value={{state, dispatch}}> 
       <Router routes={routes}>
        
-        
-        <div className="d-flex bd-highlight" style={{ height: "100vh"}}>
-          <div className="p-2  flex-grow-1 bd-highlight" style={{ width:"15%", backgroundColor: "#359931", color: "#FFFFFF"}} >
-              <nav className="fs-4 nav flex-column menu">
-                <Link href={'/'}> <h2>  Home </h2> </Link>
-                <Link href={'/tutoriais'}> Tutoriais</Link>
-                <Link href={'/links'}> Links </Link>
-              <a href="#"  id="registros"> Registros </a>
-              </nav>
+        <div className="container ">
+        <div className="row" style={{ height: "100vh"}}>
+          <div className="col-2 m-0 p-0" style={{ backgroundColor: "#FFFFFF", color: "#FFFFFF", border: "2px solid #EEEEEE"}} >
+              <SideBar/>
           </div>
 
-          <div className="p-0 w-100 bd-highlight" style={{}} >
-          
-            <div className="container">
-              <View  />
-            </div>
-            
+          <div className="col-10 m-0 p-0" style={{}} >
+            <TitleBar/>
+            <View  />
           </div>
         </div>
-      
-        
-            
-        
+        </div>
         
         {/* <Content /> */}
       </Router>

@@ -4,7 +4,6 @@ import { useInput } from "react-hookedup"
 import { useUpdateTutorial } from "../../api/apiTutorial"
 import { useNavigation } from "react-navi"
 
-import { useTimeout } from 'react-hookedup'
 
 export default function EditTutorial({tutorial}){
 
@@ -33,7 +32,7 @@ export default function EditTutorial({tutorial}){
         
     },[response])
 
-    function handleSubmit(e){
+    function salvarTutorial(e){
        e.preventDefault()
        saveTutorial(id, title, text)
       
@@ -42,11 +41,14 @@ export default function EditTutorial({tutorial}){
        }
        
     }
+    function salvarEContinuar(){
+        saveTutorial(id, title, text)
+    }
     return(
         <>
             {
                 tutorial && 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={salvarTutorial}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Nome</label>
                     <input type="text" className="form-control" id="name" name="name" value={title} {...bindTitle} />
@@ -56,7 +58,8 @@ export default function EditTutorial({tutorial}){
                     <textarea className="form-control" id="text" name="text" rows="3" value={text} {...bindDoText}/>
                 
                 </div>
-                <button type="submit" className="btn btn-primary">Atualizar</button>
+                <button type="submit" className="btn btn-primary">Salvar</button>
+                <button type="button" className="btn btn-dark" onClick={salvarEContinuar}>Salvar e continuar</button>
                 <div className={classMessage}>{message} </div>
             </form>
             }

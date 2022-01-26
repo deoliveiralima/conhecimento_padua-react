@@ -1,10 +1,10 @@
 
-import React,{useContext, useEffect, useState} from "react"
-import { useLoadingRoute } from "react-navi"
+import React,{useEffect, useState} from "react"
+
 import { useListTutorial } from "../api/apiTutorial"
 import TutorialList from "../components/tutoriais/ TutorialList"
-import { StateContext } from "../contexts"
-import { useDispatch, useTutoriais } from "../hooks"
+
+
 import { useCurrentRoute } from "react-navi"
 
 
@@ -16,8 +16,6 @@ export default function ListTutorialPage({}){
     const [response, getListaTutoriais] = useListTutorial()
     const [tutoriais, setTutoriais] = useState()
 
-    //console.log(data)
-
 
     useEffect(() => {
         
@@ -26,20 +24,18 @@ export default function ListTutorialPage({}){
     }, [])
 
     useEffect(() => {
-       
         //dispatch({type: 'LIST_TUTORIAIS', tutoriais: response.data})
         setTutoriais(response.data)
-       
-        
     }, [response])
 
 
 
     return(
         <div> 
-            {response.isLoading && "...carregando"} <br/>
-            <TutorialList tutoriais={tutoriais}/>
-
+            <div style={{height: "5vh"}}>
+                {response.isLoading && <div className="spinner-border" role="status"/>}
+            </div>
+                <TutorialList tutoriais={tutoriais} getListaTutoriais = {getListaTutoriais}/>
         </div>
     )
 

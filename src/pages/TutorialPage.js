@@ -1,29 +1,27 @@
-import { useContext, useEffect } from "react"
-import { Link } from "react-navi"
-import { StateContext } from "../contexts"
+import { useEffect, useState } from "react"
 import { useGetTutorial } from "../api/apiTutorial"
 import TutorialShow from "../components/tutoriais/TutorialShow"
-import { useDispatch } from "../hooks"
+
 
 
 export default function TutorialPage({id}){
-    const dispatch = useDispatch()
+    const [tutorial, setTutorial] = useState()
 
-    const [tutorial, getTutorial] = useGetTutorial()
+    const [response, getTutorial] = useGetTutorial()
    
     useEffect(() => {
         getTutorial(id)
     }, [id])
     useEffect( () => {
         
-        dispatch({type:'SET_TUTORIAL', tutorial: tutorial.data })
-    }, [tutorial])
+        setTutorial(response.data)
+    }, [response])
   
 
     return(
         <>
             
-            <TutorialShow/>
+            <TutorialShow tutorial={tutorial}/>
         </>
     )
 

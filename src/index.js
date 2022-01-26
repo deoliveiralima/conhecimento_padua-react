@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,6 +12,8 @@ import axios from "axios";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import store from './configureStore';
+
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api/"
 });
@@ -16,7 +21,10 @@ const axiosInstance = axios.create({
 ReactDOM.render(
   <React.StrictMode>
     <RequestProvider value={axiosInstance}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
+      
     </RequestProvider>
     
   </React.StrictMode>,

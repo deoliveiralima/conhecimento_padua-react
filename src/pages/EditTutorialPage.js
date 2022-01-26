@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react"
-import { Link } from "react-navi"
-import { StateContext } from "../contexts"
+import {  useEffect } from "react"
+
 import { useGetTutorial } from "../api/apiTutorial"
 import EditTutorial from "../components/tutoriais/EditTutorial"
 
