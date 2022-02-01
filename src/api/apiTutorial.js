@@ -1,26 +1,20 @@
-import { useState } from "react";
+
 import { useResource } from "react-request-hook";
-import dataService from './DataService'
-import http from './http-common'
+
 
 export  function useCreateTutorial(){
 
-    return  useResource( ({title, text})=> ({
+    return  useResource( (title, text)=> ({
         url: '/tutorial',
         method: 'post',
         data: {title, text}
     }))
-
 }
 
-
-
 export  function useListTutorial(){
-    return useResource(() => ({
-        url: `/tutorial`,
+    return useResource((page) => ({
+        url: `/tutorial?page=${page}`,
         method: 'get',
-        
-
     }))
 
 }

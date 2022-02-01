@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import {BiPencil} from 'react-icons/bi'
-import { useDispatch, useSelector,  } from "react-redux";
-import { useGetLink, useRemovelink } from "../../api/apiLink";
-import CancelDeleteButton from "../buttons/CancelDeleteButton";
-import ConfirmDeleteButton from "../buttons/ConfirmDeleteButton";
 
+import { useDispatch, useSelector,  } from "react-redux";
+import { retrieveLink } from "../../actions/actions";
+import { useGetLink, useRemovelink } from "../../api/apiLink";
+import { ConfirmDeleteButton } from "../accessories";
+import { CancelDeleteButton } from "../accessories";
 
 export default function RowTableList({id, nome, url}){
     const dispatch = useDispatch()
@@ -18,13 +19,17 @@ export default function RowTableList({id, nome, url}){
     const [confirmDelete, setConfirmDelete] =useState(false)
 
     useEffect(() => {
-        dispatch({type: 'RETRIEVE_LINK', link:response.data})
+        
+        dispatch(retrieveLink(response.data))
            
     }, [response.data])
 
     useEffect(()=>{
-        setConfirmDelete(false)
-        getLinks()
+        if(responseRemove.data){
+            setConfirmDelete(false)
+            getLinks()
+        }
+        
     }, [responseRemove])
 
     function confirmRemove(id){

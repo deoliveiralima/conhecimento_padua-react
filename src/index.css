@@ -13,5 +13,14 @@ code {
 }
 
 .alert-div{
-  height: 5vh;
+  height: 9vh;
+}
+
+.sideBar{
+  font-size: 1em;
+}
+
+.no-margin-padding{
+  margin: 0;
+  padding: 0;
 }

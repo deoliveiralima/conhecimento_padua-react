@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import { useInput } from "react-hookedup";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateLink, useUpdateLink } from "../../api/apiLink";
+import { useAlert } from "../../hooks";
 
-function FormData(){
+ function FormData(){
 
     const link = useSelector(state => state.link)
     const getLinks = useSelector(state => state.getLinks)
-    const dispatch = useDispatch()
 
     const {value: nome, setValue: setNome, bindToInput: bindName} = useInput('')
     const {value: url, setValue: setUrl, bindToInput: bindUrl} = useInput('')
@@ -18,28 +18,31 @@ function FormData(){
 
     const [option, setOption] = useState('create')
 
-    
+    const alert = useAlert(responseCreate)
 
     useEffect(()=>{
-        setNome(link.nome)
-        setUrl(link.url)
-        setId(link.id)
-        setOption('update')
+        if(link.id){
+            setNome(link.nome)
+            setUrl(link.url)
+            setId(link.id)
+        }
+        
+        if(link.id)
+            setOption('update')
     }, [link])
     
     useEffect(()=>{
         getLinks()
+        alert(responseCreate)
+        alert(responseUpdate)
 
     },[responseUpdate, responseCreate])
 
-    //para mensagem de error ou sucesso
-    const [alertMessage, setAlertMesssage] = useState()
-    const [alertClass, setAlertClass] = useState()
 
     function handleSubmit(e){
         e.preventDefault()
-       console.log(option)
-        if(option === 'create')
+       
+        if(option === 'create' )
             create(nome, url)
         else if(option === 'update')
             update(id, nome, url)
@@ -51,17 +54,13 @@ function FormData(){
     function defaultValues(){
         setNome('')
         setUrl('')
-        setId('')
+        setId()
         setOption('create')
         
     }
 
     return(
-            <div className="card">
-                <div className="card-header">
-                    Adicionar Link
-                </div>
-                <div className="card-body">
+            
                 <form onSubmit={handleSubmit} method="post" >
                 
 
@@ -85,12 +84,7 @@ function FormData(){
                     </div>
                 </div>
                 </form>
-                </div>
-                <div style={{height: "7vh",}} >
-                    <div className={alertClass}> {alertMessage} </div>
-
-                </div>
-            </div>
+              
                 
             
     )
