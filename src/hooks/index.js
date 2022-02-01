@@ -1,6 +1,5 @@
-import useDispatch from './useDispatch'
 
+import useAlert from './useAlert'
+import useRoutes from './useRoutes'
 
-export {useDispatch}
-export * from './useTutorial'   
-export * from './useLink'
+export {useAlert, useRoutes}

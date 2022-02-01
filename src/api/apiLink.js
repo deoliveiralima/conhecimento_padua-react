@@ -2,7 +2,7 @@ import { useResource } from "react-request-hook";
 
 export  function useCreateLink(){
 
-    return  useResource( ({nome, url})=> ({
+    return  useResource( (nome, url)=> ({
         url: '/link',
         method: 'post',
         data: {nome, url}
@@ -33,7 +33,7 @@ export  function useUpdateLink(){
         data: {nome, url}
     }))
 }
-export  function useRemovelink(){
+export  function useRemovelink(){ 
     return useResource((id) => ({
         url: `/link/${id}`,
         method: 'delete',

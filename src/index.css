@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.alert-div{
+  height: 9vh;
+}
+
+.sideBar{
+  font-size: 1em;
+}
+
+.no-margin-padding{
+  margin: 0;
+  padding: 0;
+}
