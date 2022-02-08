@@ -24,3 +24,22 @@ code {
   margin: 0;
   padding: 0;
 }
+
+.card-login{
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.33);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.33);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.33);
+    border-radius: 10px;
+  }
+.form-login{
+  width: 60%;
+  margin-left: 20%;
+}
+.btn-login{
+  width: 100%;
+}
+.page-login{
+  background-color: rgb(251, 251, 251);
+
+  height: 100vh
+}

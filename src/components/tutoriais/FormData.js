@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useInput } from "react-hookedup";
-import { useNavigation } from "react-navi";
+
 import { useCreateTutorial, useUpdateTutorial } from "../../api/apiTutorial";
 import { useAlert } from "../../hooks";
+
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function FormData({tutorial}){
 
     const {value: title, setValue: setTitle, bindToInput: bindTitle} = useInput('')
-    const {value: text,  setValue: setText,   bindToInput: bindDoText} = useInput('')
+    const[text, setText] = useState('')
     const [id, setId] = useState()
     const [option, setOption] = useState('create')
 
@@ -16,7 +20,23 @@ export default function FormData({tutorial}){
 
     const alert = useAlert()
 
-    const navigation = useNavigation() 
+        
+    const { quill, quillRef } = useQuill();
+
+    const history = useHistory()
+
+
+    useEffect(()=>{
+        if (quill) {
+            quill.clipboard.dangerouslyPasteHTML(text);
+
+
+            quill.on('text-change', (delta, oldDelta, source) => {
+              setText(quill.root.innerHTML)
+              
+            })}
+
+    },[quill])
 
     useEffect(()=>{ 
           
@@ -47,7 +67,7 @@ export default function FormData({tutorial}){
         else{
             update(id, title, text)
         }
-        navigation.navigate('/tutoriais')
+        history.push('/tutoriais')
 
     }
     
@@ -69,7 +89,8 @@ export default function FormData({tutorial}){
                 </div>
                 <div className="mb-3">
                 <label htmlFor="text" className="form-label">Texto</label>
-                <textarea className="form-control" id="text" name="text" rows="3" value={text} {...bindDoText}/>
+               
+                <div ref={quillRef} />
               
             </div>
             <button type="submit" className="btn btn-primary me-2">Salvar</button>   

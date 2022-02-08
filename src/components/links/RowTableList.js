@@ -61,7 +61,7 @@ export default function RowTableList({id, nome, url}){
                         
                         
                     </div>
-                            {!confirmDelete && <AiFillDelete  id={id} style={{cursor: "pointer"}} onClick={(e) => setConfirmDelete(true)}  /> }
+                        {!confirmDelete && <AiFillDelete  id={id} style={{cursor: "pointer"}} onClick={(e) => setConfirmDelete(true)}  /> }
                     
                     
                 

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux"
 import { links, link, getLinks } from "./linkReducers"
 import { tutoriais, tutorial, getTutoriais, tutoriaisPage } from "./tutorialReducer"
+import {login} from './loginReducer'
 
     function alertClass( state = '', action){
         switch(action.type){
@@ -28,6 +29,6 @@ import { tutoriais, tutorial, getTutoriais, tutoriaisPage } from "./tutorialRedu
 
 // }
 
-const appReducer = combineReducers({links, link, getLinks, alertClass, alertMessage, tutoriais, tutorial, getTutoriais, tutoriaisPage})
+const appReducer = combineReducers({links, link, getLinks, alertClass, alertMessage, tutoriais, tutorial, getTutoriais, tutoriaisPage, login})
 
 export default appReducer

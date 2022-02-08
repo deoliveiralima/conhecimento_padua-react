@@ -24,6 +24,7 @@ export function link (state = {}, action){
 export function getLinks( state = ()=>{}, action){
     switch(action.type){
         case 'FUNCTION_GET_LINKS':
+           
             return action.getLinks
         default:
             return state

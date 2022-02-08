@@ -5,9 +5,10 @@ import http from './http-common'
 
 export  function useLogin(){
 
-    return  useResource( (username, password)=> ({
+    return  useResource( (cpf, password)=> ({
         url: 'http://127.0.0.1:8000/api/login',
         method: 'post',
-        data: {username, password}
+        
+        data: {cpf, password}
     }))
 }

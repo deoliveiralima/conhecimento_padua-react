@@ -8,5 +8,5 @@ export const FUNCTION_GET_TUTORIAIS = 'FUNCTION_GET_TUTORIAIS'
 export const FORWARD_PAGE = 'FORWARD_PAGE'
 export const BACKWARD_PAGE = 'BACKWARD_PAGE'
 export const SET_PAGE = 'SET_PAGE'
-
+export const SET_LOGIN = 'SET_LOGIN'
 

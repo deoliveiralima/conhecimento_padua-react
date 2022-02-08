@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 
 export default function TableList(){
     const links = useSelector(state => state.links)
+  
     
-
 
     return(
         <table className="table table-hover table-striped table-bordered" >

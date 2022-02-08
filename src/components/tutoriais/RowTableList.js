@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetTutorial, useRemoveTutorial } from "../../api/apiTutorial";
+import {  useRemoveTutorial } from "../../api/apiTutorial";
 import { CancelDeleteButton, ConfirmDeleteButton } from "../accessories";
 
 import { AiFillDelete } from "react-icons/ai";
@@ -8,7 +8,8 @@ import { BiPencil } from "react-icons/bi";
 
 import {  useSelector } from "react-redux";
 
-import { useNavigation } from "react-navi";
+
+import { useHistory } from "react-router-dom";
 
 
 export default function RowTableList({id, titulo}){
@@ -18,13 +19,17 @@ export default function RowTableList({id, titulo}){
 
     const getTutoriais = useSelector(state => state.getTutoriais)
 
-    const navigation = useNavigation()
+    const history = useHistory()
+
 
     useEffect(()=>{
         if(responseRemove.data){
             console.log(responseRemove.data)
             setConfirmDelete(false)
             getTutoriais(tutoriaisPage)
+            console.log(getTutoriais)
+            
+           
         }
         
 
@@ -35,14 +40,14 @@ export default function RowTableList({id, titulo}){
     return(
         <tr key={id} id={id}>
             <th scope="row">{id} </th>
-            <td style={{cursor: "pointer"}} onClick={(e) => navigation.navigate(`/tutorial/${id}`)}>
+            <td style={{cursor: "pointer"}} onClick={(e) => history.push(`/tutorial/${id}`)}>
 
                 {titulo} <GrView/> 
             </td>
             
             <td className="col-1">
             <BiPencil  style={{cursor: "pointer"}} 
-                onClick={(e) =>  navigation.navigate(`/tutorial/edit/${id}`) }/> 
+                onClick={(e) =>  history.push(`/tutorial/edit/${id}`) }/> 
             </td>
             <td className="col-10"> 
                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">

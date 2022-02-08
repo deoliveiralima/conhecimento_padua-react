@@ -3,17 +3,18 @@ import { useSelector } from "react-redux"
 import { RowTableList } from "."
 import { GrAddCircle } from "react-icons/gr"
 import { Button } from "react-bootstrap"
-import { useNavigation } from "react-navi"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 export default function  TableList(){
     
     const tutoriais = useSelector(state => state.tutoriais)
-    const navigation = useNavigation()
+    
+    const history = useHistory()
 
     
     return(
         <>  
        
-        <Button variant="outline-secondary" className="mb-1" onClick={()=> navigation.navigate('/tutorial/create') }><GrAddCircle/> Adicionar </Button>{' '}
+        <Button variant="outline-secondary" className="mb-1" onClick={()=> history.push('/tutorial/create') }><GrAddCircle/> Adicionar </Button>{' '}
         <table className="table table-hover table-striped table-bordered" >
             <thead>
                 <tr>

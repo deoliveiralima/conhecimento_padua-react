@@ -22,6 +22,7 @@ export function tutorial (state = {}, action){
 export function getTutoriais (state = () =>{}, action){
     switch(action.type){
         case 'FUNCTION_GET_TUTORIAIS':
+           
             return action.getTutoriais
         default:
             return state

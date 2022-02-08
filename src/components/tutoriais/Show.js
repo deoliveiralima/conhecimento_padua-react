@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import { useGetTutorial } from "../../api/apiTutorial"
 
 
 
 
 
-export default function Show({id}){
+export default function Show({}){
+    const {id} = useParams()
     const [tutorial, setTutorial] = useState()
 
     const [response, getTutorial] = useGetTutorial()
@@ -30,7 +32,11 @@ export default function Show({id}){
                         <h3> {tutorial.titulo}</h3>
                         <hr/>
                         <p>
-                            {tutorial.texto}
+                          
+                        
+                        <div dangerouslySetInnerHTML={{__html: tutorial.texto}}></div>
+
+
                         </p>
                     </div>
                 

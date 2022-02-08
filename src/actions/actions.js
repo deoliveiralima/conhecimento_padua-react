@@ -1,5 +1,5 @@
 import {RETRIEVE_LINKS, RETRIEVE_LINK, FUNCTION_GET_LINKS, RETRIEVE_TUTORIAIS, 
-    RETRIEVE_TUTORIAL, FUNCTION_GET_TUTORIAIS, FORWARD_PAGE, BACKWARD_PAGE,SET_PAGE} from './actionTypes'
+    RETRIEVE_TUTORIAL, FUNCTION_GET_TUTORIAIS, FORWARD_PAGE, BACKWARD_PAGE,SET_PAGE, SET_LOGIN} from './actionTypes'
 
 export function retrieveLinks(links){
     
@@ -31,6 +31,7 @@ export function retrieveTutorial(tutorial){
 }
 
 export function functionGetTutoriais(getTutoriais){
+
     return { type: FUNCTION_GET_TUTORIAIS, getTutoriais }
 }
 
@@ -44,4 +45,9 @@ export function backwardPage(){
 
 export function setPage(page){
     return { type: SET_PAGE, page }
+}
+
+export function  setLogin(login) { 
+    console.log(login)
+    return {type: SET_LOGIN, login}
 }

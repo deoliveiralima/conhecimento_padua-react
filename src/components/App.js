@@ -1,36 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {Router, View, useCurrentRoute} from 'react-navi'
 
-import TitleBar from "./layout/TitleBar";
 import SideBar from "./layout/SideBar";
 import { useRoutes } from "../hooks";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
+import { Page } from "./links";
+import FormLogin from "../login/Form";
+import PrivateRoute from "./routes/PrivateRoutes";
+import HomePage from "./HomePage";
+import { ListPage, PageCreate, PageEdit, Show } from "./tutoriais";
+import { useSelector } from "react-redux";
+import LoginPage from "../login/Page";
+import { BrowserRouter } from "react-router-dom";
 
 
 function App() {
+  
  
   const route = useCurrentRoute()
-  const routes = useRoutes()
+  const rotas = useRoutes()
+  const login = useSelector(state => state.login)
+
+  const username = sessionStorage.getItem('token')
+  console.log(username)
+  
+
 
   return (
     <div className="App" style={{margin: 0}}>
       
-      <Router routes={routes}>
-       
-        <div className="container ">
-        <div className="row" style={{ height: "100vh"}}>
-          <div className="col-2 m-0 p-0" style={{ backgroundColor: "#FFFFFF", color: "#FFFFFF", border: "2px solid #EEEEEE"}} >
-              <SideBar/>
-          </div>
+ 
+          
 
-          <div className="col-10 m-0 p-0" style={{}} >
-            <TitleBar/>
-            <View  />
-          </div>
-        </div>
-        </div>
+            
+          <BrowserRouter>
+            
+              <PrivateRoute  />
   
-      </Router>
+
+              <Route path="/login" component={LoginPage} />
+              
+              
+          </BrowserRouter>
+           
+     
+
      
     </div>
   );

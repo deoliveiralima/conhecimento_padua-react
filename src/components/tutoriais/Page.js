@@ -17,7 +17,8 @@ export default function Page(){
   
     useEffect(() => {
         getTutoriais(tutoriaisPage)
-        dispatch(functionGetTutoriais(getTutoriais(tutoriaisPage)))
+        dispatch(functionGetTutoriais(getTutoriais))
+        
 
     }, [, tutoriaisPage])
 

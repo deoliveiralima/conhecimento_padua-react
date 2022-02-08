@@ -13,6 +13,7 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import store from './configureStore';
+import { BrowserRouter } from 'react-router-dom';
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/api/"
@@ -22,7 +23,10 @@ ReactDOM.render(
   <React.StrictMode>
     <RequestProvider value={axiosInstance}>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+        
       </Provider>
       
     </RequestProvider>

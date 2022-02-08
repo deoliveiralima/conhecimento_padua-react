@@ -1,29 +1,38 @@
 
-import HomePage from '../components/HomePage'
-import { ListPage, PageCreate, PageEdit, Show } from '../components/tutoriais'
-import { Page } from '../components/links'
-import FormLogin from '../login/Form'
-import { Route } from 'react-router-dom'
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min'
-import SideBar from '../components/layout/SideBar'
+import React from "react";
+import { Link, Redirect, Route } from "react-router-dom";
+import HomePage from "../HomePage";
+import SideBar from "../layout/SideBar";
+import { Page } from "../links";
+import { ListPage, PageCreate, PageEdit, Show } from "../tutoriais";
 
 
 
 
-export default function useRoutes() {
-  
-  const routes = 
+export default function PrivateRoute(){
+    
+    const loggedUser = sessionStorage.getItem('token')
 
-    <BrowserRouter>
-          <div className="container "> 
+    if(!loggedUser){
+        return <Redirect to={{ pathname: '/login'}} />
+    }
+
+    return(
+
+        <>
+            <div className="container "> 
             <div className="row" style={{ height: "100vh"}}>
                 <div className="col-2 m-0 p-0" style={{ backgroundColor: "#FFFFFF", color: "#FFFFFF", border: "2px solid #EEEEEE"}} >
                 <Route  path={'/'}>
+               
                     <SideBar/> a
                 </Route>
                 </div>
                 <div className="col-10 m-0 p-0" style={{}} >
-                    <Route exact path={'/tutoriais'}>
+                    <Route  exact path={'/'}>
+                        <HomePage/>
+                    </Route>
+                    <Route  path={'/tutoriais'}>
                         <ListPage/>
                     </Route>
                     <Route path={'/links'}>
@@ -41,10 +50,9 @@ export default function useRoutes() {
                 </div>
             </div>
           </div> 
-    </BrowserRouter>
-
-      return routes 
-
-
-    
-}
+        
+        </>
+        
+        
+    )
+} 
